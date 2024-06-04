@@ -1,7 +1,10 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
+import { useSelector } from 'react-redux';
+import { selectOrders, selectFeed, getFeedThunk } from '../../services/slices/stellarBurgerSlice';
+import { useDispatch } from '../../services/store';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
@@ -11,8 +14,9 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
 
 export const FeedInfo: FC = () => {
   /** TODO: взять переменные из стора */
-  const orders: TOrder[] = [];
-  const feed = {};
+  const orders: TOrder[] = useSelector(selectOrders);
+  const feed = useSelector(selectFeed);
+  const dispatch = useDispatch();
 
   const readyOrders = getOrders(orders, 'done');
 
