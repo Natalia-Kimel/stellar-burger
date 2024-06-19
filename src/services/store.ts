@@ -7,26 +7,25 @@ import {
 } from 'react-redux';
 import stellarBurgerReducer from './slices/stellarBurgerSlice';
 //import orderSlice from './slices/order';
-import burgerConstructorSlice from './slices/burgerConstructor';
-import feedSlice from './slices/feed';
-import ingredientsSlice from './slices/ingredients';
+import burgerConstructorReducer from './slices/burgerConstructor';
+import feedReducer from './slices/feed';
+import ingredientsReducer from './slices/ingredients';
 
 const rootReducer = combineReducers({
-  burgerConstructor: burgerConstructorSlice,
-  feed: feedSlice,
-  ingredients: ingredientsSlice,
+  burgerConstructor: burgerConstructorReducer,
+  feed: feedReducer,
+  ingredients: ingredientsReducer,
   //order: orderSlice,
 })
 
 export const store = configureStore({
   reducer: {
-    rootReducer
+    stellarBurgerReducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 });
-console.log(rootReducer);
 
-type RootState = ReturnType<typeof rootReducer>;
+//type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
 
