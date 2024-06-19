@@ -4,7 +4,10 @@ import { TOrder } from '@utils-types';
 import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from '../../services/store';
-import { selectOrders, getIngredientsThunk, getFeedThunk, getOrdersThunk } from '../../services/slices/stellarBurgerSlice';
+import {
+  selectOrders,
+} from '../../services/slices/stellarBurgerSlice';
+import { getFeedThunk } from '../../services/slices/feed';
 
 export const Feed: FC = () => {
   /** TODO: взять переменную из стора */
@@ -14,10 +17,17 @@ export const Feed: FC = () => {
   useEffect(() => {
     dispatch(getFeedThunk());
   }, [dispatch]);
-  
+
   if (!orders.length) {
     return <Preloader />;
   }
 
-  return (<FeedUI orders={orders} handleGetFeeds={() => {dispatch(getFeedThunk())}} />);
+  return (
+    <FeedUI
+      orders={orders}
+      handleGetFeeds={() => {
+        dispatch(getFeedThunk());
+      }}
+    />
+  );
 };

@@ -15,13 +15,25 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
       <div className={styles.menu_part_left}>
         <>
           <BurgerIcon type={'primary'} />
-          <Link to={'/'} className={location.pathname === '/' ? styles.link : styles.link_active}>
-            <p className='text text_type_main-default ml-2 mr-10'>Конструктор</p>
+          <Link
+            to={'/'}
+            className={
+              location.pathname === '/' ? styles.link_active : styles.link
+            }
+          >
+            <p className='text text_type_main-default ml-2 mr-10'>
+              Конструктор
+            </p>
           </Link>
         </>
         <>
           <ListIcon type={'primary'} />
-          <Link to={'/feed'} className={location.pathname === '/feed' ? styles.link : styles.link_active}>
+          <Link
+            to={'/feed'}
+            className={
+              location.pathname === '/feed' ? styles.link_active : styles.link
+            }
+          >
             <p className='text text_type_main-default ml-2'>Лента заказов</p>
           </Link>
         </>
@@ -29,7 +41,12 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
       <div className={styles.logo}>
         <Logo className='' />
       </div>
-      <Link to={'/profile'} className={location.pathname === '/profile' ? styles.link : styles.link_active}>
+      <Link
+        to={'/profile'}
+        className={
+          location.pathname === '/profile' ? styles.link_active : styles.link
+        }
+      >
         <div className={styles.link_position_last}>
           <ProfileIcon type={'primary'} />
           <p className='text text_type_main-default ml-2'>

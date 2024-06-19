@@ -4,15 +4,19 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { selectIngredients, selectOrders } from '../../services/slices/stellarBurgerSlice';
+import {
+  selectOrders
+} from '../../services/slices/stellarBurgerSlice';
+import { selectIngredients } from '../../services/slices/ingredients';
 
 export const OrderInfo: FC = () => {
   const params = useParams<{ number: string }>();
 
   /** TODO: взять переменные orderData и ingredients из стора */
   const order = useSelector(selectOrders);
-  const orderData = order.find((order) => order.number === parseInt(params.number!));
-
+  const orderData = order.find(
+    (order) => order.number === parseInt(params.number!)
+  );
   const ingredients: TIngredient[] = useSelector(selectIngredients);
 
   /* Готовим данные для отображения */

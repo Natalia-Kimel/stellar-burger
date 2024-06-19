@@ -1,10 +1,4 @@
 import { FC } from 'react';
 import { AppHeaderUI } from '@ui';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../services/slices/stellarBurgerSlice';
 
-export const AppHeader: FC = () => {
-    const user = useSelector(selectUser);
-
-    return <AppHeaderUI userName={user.name} />;
-}
+export const AppHeader: FC = () => <AppHeaderUI userName='' />;

@@ -3,7 +3,7 @@ import { TIngredientsCategoryProps } from './type';
 import { TIngredient } from '@utils-types';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
 import { useSelector } from 'react-redux';
-import { selectBurgerConstructor } from '../../services/slices/stellarBurgerSlice';
+import { selectBurgerConstructor } from '../../services/slices/burgerConstructor';
 
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,
@@ -19,7 +19,7 @@ export const IngredientsCategory = forwardRef<
       if (!counters[ingredient._id]) counters[ingredient._id] = 0;
       counters[ingredient._id]++;
     });
-    if (bun._id) counters[bun._id] = 2;
+    if (bun?._id) counters[bun._id] = 2;
     return counters;
   }, [burgerConstructor]);
 

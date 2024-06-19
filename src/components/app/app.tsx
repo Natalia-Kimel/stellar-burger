@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 import { useCallback, useEffect } from 'react';
 
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { getIngredientsThunk, selectIngredients } from '../../services/slices/stellarBurgerSlice';
+import { getIngredientsThunk, selectIngredients } from '../../services/slices/ingredients';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 
 const App = () => {
@@ -49,7 +49,7 @@ const App = () => {
           <Route
             path='/register'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onlyUnAuth>
                 <Register />
               </ProtectedRoute>
             }
@@ -57,7 +57,7 @@ const App = () => {
           <Route
             path='/forgot-password'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onlyUnAuth>
                 <ForgotPassword />
               </ProtectedRoute>
             }
@@ -65,7 +65,7 @@ const App = () => {
           <Route
             path='/reset-password'
             element={
-              <ProtectedRoute>
+              <ProtectedRoute onlyUnAuth>
                 <ResetPassword />
               </ProtectedRoute>
             }
@@ -90,7 +90,14 @@ const App = () => {
 
           <Route path='/feed:number' element={<OrderInfo />} />
           <Route path='/ingredients/:id' element={<IngredientDetails />} />
-          <Route path='/profile/orders/:number' element={<ProtectedRoute><OrderInfo /></ProtectedRoute>} />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
 
         {backgroundLocation && (

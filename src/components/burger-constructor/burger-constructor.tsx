@@ -3,7 +3,13 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useSelector } from 'react-redux';
 import { useDispatch } from '../../services/store';
-import { selectBurgerConstructor, selectOrderRequest, selectOrderModalData, getIngredientsThunk, selectIngredients } from '../../services/slices/stellarBurgerSlice';
+import {
+  selectOrderRequest,
+  selectOrderModalData,
+  orderBurgerThunk
+} from '../../services/slices/stellarBurgerSlice';
+import { selectBurgerConstructor } from '../../services/slices/burgerConstructor';
+import { getIngredientsThunk, selectIngredients } from '../../services/slices/ingredients';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -14,13 +20,19 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
+    if (constructorItems.bun._id && !orderRequest) {
+    return (dispatch(orderBurgerThunk([
+      constructorItems.bun._id,
+      ...constructorItems.ingredients.map((ing) => ing._id),
+      constructorItems.bun._id
+    ]))
+    )}
   };
   const closeOrderModal = () => {};
 
   const price = useMemo(
     () =>
-      (constructorItems.bun.price ? constructorItems.bun.price * 2 : 0) +
+      (constructorItems.bun?.price ? constructorItems.bun.price * 2 : 0) +
       constructorItems.ingredients.reduce(
         (s: number, v: TConstructorIngredient) => s + v.price,
         0
@@ -32,7 +44,7 @@ export const BurgerConstructor: FC = () => {
     if (!ingredients.length) {
       dispatch(getIngredientsThunk());
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <BurgerConstructorUI

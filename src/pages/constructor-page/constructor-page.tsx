@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectLoading } from '../../services/slices/stellarBurgerSlice';
+import { selectLoading } from '../../services/slices/ingredients';
 
 import styles from './constructor-page.module.css';
 
