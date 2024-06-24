@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { Preloader } from '../ui';
 import { Navigate, useLocation } from 'react-router-dom';
 import {
-    getUserThunk,
+  getUserThunk,
   selectIsAuthChecked,
   selectLoading
-} from '../../services/slices/stellarBurgerSlice';
+} from '../../services/slices/user';
 import { useDispatch } from '../../services/store';
 
 type ProtectedRouteProps = {
@@ -25,7 +25,7 @@ export const ProtectedRoute = ({
 
   useEffect(() => {
     if (!isAuthChecked) {
-        dispatch(getUserThunk());
+      dispatch(getUserThunk());
     }
   }, []);
 

@@ -2,9 +2,11 @@ import { FC, memo } from 'react';
 import { BurgerConstructorElementUI } from '@ui';
 import { BurgerConstructorElementProps } from './type';
 import { useDispatch } from '../../services/store';
-import { moveIngredientDown, moveIngredientUp, deleteIngredient } from '../../services/slices/burgerConstructor';
-//import { getOrderByNumberThunk } from '../../services/slices/order';
-import { useParams } from 'react-router-dom';
+import {
+  moveIngredientDown,
+  moveIngredientUp,
+  deleteIngredient
+} from '../../services/slices/burgerConstructor';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
   ({ ingredient, index, totalItems }) => {
@@ -13,12 +15,9 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
     const handleMoveDown = () => {
       dispatch(moveIngredientDown(ingredient));
     };
-    
-    const params = useParams<{ number: string }>();
 
     const handleMoveUp = () => {
       dispatch(moveIngredientUp(ingredient));
-      //dispatch(getOrderByNumberThunk(parseInt(params.number!)))
     };
 
     const handleClose = () => {

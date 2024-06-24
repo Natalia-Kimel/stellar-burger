@@ -12,20 +12,14 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../services/store';
-import { useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
-
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { getIngredientsThunk, selectIngredients } from '../../services/slices/ingredients';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
+import { useCallback } from 'react';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const backgroundLocation = location.state?.background;
-  const ingredients = useSelector(selectIngredients);
-  const dispatch = useDispatch();
 
   const onModalClose = useCallback(() => {
     navigate(-1);
@@ -103,9 +97,14 @@ const App = () => {
         {backgroundLocation && (
           <Routes>
             <Route
-              path='/feed:number'
+              path='/feed/:number'
               element={
-                <Modal title={''} onClose={onModalClose}>
+                <Modal
+                  title={''}
+                  onClose={() => {
+                    onModalClose();
+                  }}
+                >
                   <OrderInfo />
                 </Modal>
               }
@@ -113,7 +112,12 @@ const App = () => {
             <Route
               path='/ingredients/:id'
               element={
-                <Modal title={'Детали ингридиента'} onClose={onModalClose}>
+                <Modal
+                  title={'Детали ингредиента'}
+                  onClose={() => {
+                    onModalClose();
+                  }}
+                >
                   <IngredientDetails />
                 </Modal>
               }
@@ -122,7 +126,12 @@ const App = () => {
               path='/profile/orders/:number'
               element={
                 <ProtectedRoute>
-                  <Modal title={''} onClose={onModalClose}>
+                  <Modal
+                    title={''}
+                    onClose={() => {
+                      onModalClose();
+                    }}
+                  >
                     <OrderInfo />
                   </Modal>
                 </ProtectedRoute>

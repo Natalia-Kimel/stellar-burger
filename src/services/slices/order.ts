@@ -1,14 +1,9 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import {
-  getOrderByNumberApi
-} from '@api';
-import { TConstructorIngredient, TConstructorItems, TIngredient, TOrder, TUser } from '@utils-types';
-import { v4 as uuidv4 } from 'uuid';
-import {arrayMoveImmutable} from 'array-move';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getOrdersApi } from '@api';
+import { TOrder, TUser } from '@utils-types';
 
-export const getOrderByNumberThunk = createAsyncThunk(
-  'order/getByNumber',
-  async (number: number) => getOrderByNumberApi(number)
+export const getOrdersThunk = createAsyncThunk('order/allOrders', async () =>
+  getOrdersApi()
 );
 
 export interface initialState {
@@ -20,37 +15,34 @@ export interface initialState {
 const initialState: initialState = {
   isLoading: false,
   error: null,
-  orders: [],
+  orders: []
 };
 
 const orderSlice = createSlice({
   name: 'order',
   initialState,
-  reducers: {
-  },
+  reducers: {},
   selectors: {
     selectLoading: (state) => state.isLoading,
     selectErrorText: (state) => state.error,
-    selectOrder: (state) => state.orders,
+    selectOrders: (state) => state.orders
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getOrderByNumberThunk.pending, (state) => {
+      .addCase(getOrdersThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getOrderByNumberThunk.fulfilled, (state, action) => {
-        state.orders = action.payload.orders;
+      .addCase(getOrdersThunk.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.orders = action.payload;
       })
-      .addCase(getOrderByNumberThunk.rejected, (state, action) => {
+      .addCase(getOrdersThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message!;
       });
   }
 });
 
-export const {
-  selectLoading,
-  selectErrorText,
-} = orderSlice.selectors;
+export const { selectLoading, selectErrorText, selectOrders } =
+  orderSlice.selectors;
 export default orderSlice.reducer;

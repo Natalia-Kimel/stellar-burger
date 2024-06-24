@@ -5,23 +5,25 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
-import stellarBurgerReducer from './slices/stellarBurgerSlice';
+import userReducer from './slices/user';
 //import orderSlice from './slices/order';
 import burgerConstructorReducer from './slices/burgerConstructor';
 import feedReducer from './slices/feed';
 import ingredientsReducer from './slices/ingredients';
+import orderReducer from './slices/order';
+import ordersReducer from './slices/orders';
 
 const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
   feed: feedReducer,
   ingredients: ingredientsReducer,
-  //order: orderSlice,
-})
+  order: orderReducer,
+  orders: ordersReducer,
+  user: userReducer
+});
 
 export const store = configureStore({
-  reducer: {
-    stellarBurgerReducer
-  },
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
 });
 

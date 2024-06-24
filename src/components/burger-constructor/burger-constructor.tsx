@@ -6,29 +6,46 @@ import { useDispatch } from '../../services/store';
 import {
   selectOrderRequest,
   selectOrderModalData,
-  orderBurgerThunk
-} from '../../services/slices/stellarBurgerSlice';
+  orderBurgerThunk,
+  closeOrder,
+  selectLoading
+} from '../../services/slices/burgerConstructor';
 import { selectBurgerConstructor } from '../../services/slices/burgerConstructor';
-import { getIngredientsThunk, selectIngredients } from '../../services/slices/ingredients';
+import {
+  getIngredientsThunk,
+  selectIngredients
+} from '../../services/slices/ingredients';
+import { selectIsAuthChecked } from '../../services/slices/user';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const constructorItems = useSelector(selectBurgerConstructor);
   const orderRequest = useSelector(selectOrderRequest);
   const orderModalData = useSelector(selectOrderModalData);
+  const isAuthChecked = useSelector(selectIsAuthChecked);
   const ingredients = useSelector(selectIngredients);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onOrderClick = () => {
+    if (!isAuthChecked) {
+      return navigate('/login', { replace: true });
+    }
+
     if (constructorItems.bun._id && !orderRequest) {
-    return (dispatch(orderBurgerThunk([
-      constructorItems.bun._id,
-      ...constructorItems.ingredients.map((ing) => ing._id),
-      constructorItems.bun._id
-    ]))
-    )}
+      return dispatch(
+        orderBurgerThunk([
+          constructorItems.bun._id,
+          ...constructorItems.ingredients.map((ing) => ing._id),
+          constructorItems.bun._id
+        ])
+      );
+    }
   };
-  const closeOrderModal = () => {};
+  const closeOrderModal = () => {
+    dispatch(closeOrder());
+  };
 
   const price = useMemo(
     () =>
