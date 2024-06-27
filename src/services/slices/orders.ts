@@ -1,19 +1,11 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOrderByNumberApi } from '@api';
 import {
-  TConstructorIngredient,
-  TConstructorItems,
-  TIngredient,
-  TOrder,
-  TUser
+  TOrder
 } from '@utils-types';
-import { v4 as uuidv4 } from 'uuid';
-import { arrayMoveImmutable } from 'array-move';
 
 export const getOrderByNumberThunk = createAsyncThunk(
-  'order/getByNumber',
-  async (number: number) => getOrderByNumberApi(number)
-);
+  'order/getByNumber', getOrderByNumberApi);
 
 export interface initialState {
   isLoading: boolean;

@@ -2,11 +2,10 @@ import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { selectOrderData } from '../../services/slices/orders';
 import { selectIngredients } from '../../services/slices/ingredients';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { getOrderByNumberThunk } from '../../services/slices/orders';
 
 export const OrderInfo: FC = () => {
@@ -18,7 +17,7 @@ export const OrderInfo: FC = () => {
   const orderData = order.find(
     (order) => order.number === parseInt(params.number!)
   );
-  const ingredients: TIngredient[] = useSelector(selectIngredients);
+  const ingredients = useSelector(selectIngredients);
 
   useEffect(() => {
     if (params.number) {

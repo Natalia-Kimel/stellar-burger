@@ -1,20 +1,14 @@
-import { FC, useMemo, useEffect } from 'react';
+import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from 'react-redux';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import {
   selectOrderRequest,
   selectOrderModalData,
   orderBurgerThunk,
-  closeOrder,
-  selectLoading
+  closeOrder
 } from '../../services/slices/burgerConstructor';
 import { selectBurgerConstructor } from '../../services/slices/burgerConstructor';
-import {
-  getIngredientsThunk,
-  selectIngredients
-} from '../../services/slices/ingredients';
 import { selectIsAuthChecked } from '../../services/slices/user';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,7 +18,6 @@ export const BurgerConstructor: FC = () => {
   const orderRequest = useSelector(selectOrderRequest);
   const orderModalData = useSelector(selectOrderModalData);
   const isAuthChecked = useSelector(selectIsAuthChecked);
-  const ingredients = useSelector(selectIngredients);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -56,12 +49,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  useEffect(() => {
-    if (!ingredients.length) {
-      dispatch(getIngredientsThunk());
-    }
-  }, [dispatch]);
 
   return (
     <BurgerConstructorUI

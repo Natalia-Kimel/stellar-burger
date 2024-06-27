@@ -27,11 +27,11 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production'
 });
 
-//type RootState = ReturnType<typeof rootReducer>;
+type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
 
 export const useDispatch: () => AppDispatch = () => dispatchHook();
-//export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
 
 export default store;

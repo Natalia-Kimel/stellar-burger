@@ -3,9 +3,7 @@ import { getIngredientsApi } from '@api';
 import { TIngredient } from '@utils-types';
 
 export const getIngredientsThunk = createAsyncThunk(
-  'burger/getIngredients',
-  async () => getIngredientsApi()
-);
+  'burger/getIngredients', getIngredientsApi);
 
 export interface initialState {
   isLoading: boolean;

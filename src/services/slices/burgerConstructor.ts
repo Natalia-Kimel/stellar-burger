@@ -10,9 +10,7 @@ import { arrayMoveImmutable } from 'array-move';
 import { orderBurgerApi } from '@api';
 
 export const orderBurgerThunk = createAsyncThunk(
-  'order/orderBurger',
-  async (data: string[]) => orderBurgerApi(data)
-);
+  'order/orderBurger', orderBurgerApi);
 
 export interface initialState {
   isLoading: boolean;

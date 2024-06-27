@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getOrdersApi } from '@api';
-import { TOrder, TUser } from '@utils-types';
+import { TOrder } from '@utils-types';
 
-export const getOrdersThunk = createAsyncThunk('order/allOrders', async () =>
-  getOrdersApi()
-);
+export const getOrdersThunk = createAsyncThunk('order/allOrders', getOrdersApi);
 
 export interface initialState {
   isLoading: boolean;

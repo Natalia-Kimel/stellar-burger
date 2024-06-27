@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Preloader } from '../ui';
 import { Navigate, useLocation } from 'react-router-dom';
 import {
@@ -7,7 +6,7 @@ import {
   selectIsAuthChecked,
   selectLoading
 } from '../../services/slices/user';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;

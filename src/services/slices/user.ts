@@ -5,35 +5,22 @@ import {
   logoutApi,
   getUserApi,
   updateUserApi,
-  getOrdersApi
 } from '@api';
-import { TRegisterData, TLoginData } from '@api';
-import { TOrder, TUser } from '@utils-types';
+import { TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
-import { act } from 'react-dom/test-utils';
 
 export const registerUserThunk = createAsyncThunk(
-  'user/registerUser',
-  async (data: TRegisterData) => registerUserApi(data)
-);
+  'user/registerUser', registerUserApi);
 
 export const loginUserThunk = createAsyncThunk(
-  'user/loginUser',
-  async (data: TLoginData) => loginUserApi(data)
-);
+  'user/loginUser', loginUserApi);
 
-export const logoutUserThunk = createAsyncThunk('user/logoutUser', async () =>
-  logoutApi()
-);
+export const logoutUserThunk = createAsyncThunk('user/logoutUser', logoutApi);
 
-export const getUserThunk = createAsyncThunk('user/getUser', async () =>
-  getUserApi()
-);
+export const getUserThunk = createAsyncThunk('user/getUser', getUserApi);
 
 export const updateUserThunk = createAsyncThunk(
-  'user/updateUser',
-  async (user: Partial<TRegisterData>) => updateUserApi(user)
-);
+  'user/updateUser', updateUserApi);
 
 export interface initialState {
   isLoading: boolean;

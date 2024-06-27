@@ -14,16 +14,26 @@ import styles from './app.module.css';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from '../../services/store';
+import { getIngredientsThunk, selectIngredients } from '../../services/slices/ingredients';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const backgroundLocation = location.state?.background;
+  const ingredients = useSelector(selectIngredients);
+  const dispatch = useDispatch();
 
   const onModalClose = useCallback(() => {
     navigate(-1);
   }, [navigate]);
+
+  useEffect(() => {
+    if (!ingredients.length) {
+      dispatch(getIngredientsThunk());
+    }
+  }, [dispatch]);
 
   return (
     <>
