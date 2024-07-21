@@ -4,23 +4,27 @@ import {
   loginUserApi,
   logoutApi,
   getUserApi,
-  updateUserApi,
-} from '@api';
-import { TUser } from '@utils-types';
+  updateUserApi
+} from '../../utils/burger-api';
+import { TUser } from '../../utils/types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
+import { stat } from 'fs';
 
 export const registerUserThunk = createAsyncThunk(
-  'user/registerUser', registerUserApi);
+  'user/registerUser',
+  registerUserApi
+);
 
-export const loginUserThunk = createAsyncThunk(
-  'user/loginUser', loginUserApi);
+export const loginUserThunk = createAsyncThunk('user/loginUser', loginUserApi);
 
 export const logoutUserThunk = createAsyncThunk('user/logoutUser', logoutApi);
 
 export const getUserThunk = createAsyncThunk('user/getUser', getUserApi);
 
 export const updateUserThunk = createAsyncThunk(
-  'user/updateUser', updateUserApi);
+  'user/updateUser',
+  updateUserApi
+);
 
 export interface initialState {
   isLoading: boolean;
@@ -29,7 +33,7 @@ export interface initialState {
   error: string | null;
 }
 
-const initialState: initialState = {
+export const initialState: initialState = {
   isLoading: false,
   isAuthChecked: false,
   user: {
@@ -56,9 +60,8 @@ const userSlice = createSlice({
       })
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
         state.isAuthChecked = true;
+        state.user = action.payload.user;
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -70,9 +73,8 @@ const userSlice = createSlice({
       })
       .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
-        setCookie('accessToken', action.payload.accessToken);
         state.isAuthChecked = true;
+        state.user = action.payload.user;
       })
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -85,10 +87,8 @@ const userSlice = createSlice({
       .addCase(logoutUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload.success) {
-          localStorage.removeItem('refreshToken');
-          deleteCookie('accessToken');
           state.user = { name: '', email: '' };
-          state.isAuthChecked = false;
+          state.isAuthChecked = true;
         }
       })
       .addCase(logoutUserThunk.rejected, (state, action) => {
@@ -105,12 +105,11 @@ const userSlice = createSlice({
         state.user.email = action.payload.user.email;
         state.isAuthChecked = true;
       })
-      .addCase(getUserThunk.rejected, (state) => {
+      .addCase(getUserThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.isAuthChecked = false;
         state.user = { name: '', email: '' };
-        deleteCookie('accessToken');
-        localStorage.removeItem('refreshToken');
+        state.error = action.error.message!;
       })
 
       .addCase(updateUserThunk.pending, (state) => {
