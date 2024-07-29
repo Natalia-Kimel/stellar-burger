@@ -6,11 +6,12 @@ import {
   TOrder
 } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';
-import { arrayMoveImmutable } from 'array-move';
-import { orderBurgerApi } from '@api';
+import { orderBurgerApi } from '../../utils/burger-api';
 
 export const orderBurgerThunk = createAsyncThunk(
-  'order/orderBurger', orderBurgerApi);
+  'order/orderBurger',
+  orderBurgerApi
+);
 
 export interface initialState {
   isLoading: boolean;
@@ -20,7 +21,7 @@ export interface initialState {
   constructorItems: TConstructorItems;
 }
 
-const initialState: initialState = {
+export const initialState: initialState = {
   isLoading: false,
   error: '',
   orderRequest: false,
@@ -62,31 +63,31 @@ const burgerConstructorSlice = createSlice({
       state,
       action: PayloadAction<TConstructorIngredient>
     ) => {
-      if (state.constructorItems) {
-        const ingredientIndex = state.constructorItems.ingredients.findIndex(
-          (ing) => ing.id === action.payload.id
-        );
-        state.constructorItems.ingredients = arrayMoveImmutable(
-          state.constructorItems.ingredients,
-          ingredientIndex,
-          ingredientIndex + 1
-        );
-      }
+      const ingredientIndex = state.constructorItems.ingredients.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const nextItem = state.constructorItems.ingredients[ingredientIndex + 1];
+      state.constructorItems.ingredients.splice(
+        ingredientIndex,
+        2,
+        nextItem,
+        action.payload
+      );
     },
     moveIngredientUp: (
       state,
       action: PayloadAction<TConstructorIngredient>
     ) => {
-      if (state.constructorItems) {
-        const ingredientIndex = state.constructorItems.ingredients.findIndex(
-          (ing) => ing.id === action.payload.id
-        );
-        state.constructorItems.ingredients = arrayMoveImmutable(
-          state.constructorItems.ingredients,
-          ingredientIndex,
-          ingredientIndex - 1
-        );
-      }
+      const ingredientIndex = state.constructorItems.ingredients.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      const prevItem = state.constructorItems.ingredients[ingredientIndex - 1];
+      state.constructorItems.ingredients.splice(
+        ingredientIndex - 1,
+        2,
+        action.payload,
+        prevItem
+      );
     },
     closeOrder: (state) => {
       (state.orderRequest = false), (state.orderModalData = null);

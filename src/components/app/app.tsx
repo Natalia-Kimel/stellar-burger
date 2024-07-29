@@ -16,7 +16,10 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
-import { getIngredientsThunk, selectIngredients } from '../../services/slices/ingredients';
+import {
+  getIngredientsThunk,
+  selectIngredients
+} from '../../services/slices/ingredients';
 
 const App = () => {
   const navigate = useNavigate();
