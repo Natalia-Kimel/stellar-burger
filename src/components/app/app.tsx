@@ -43,7 +43,7 @@ const App = () => {
       <div className={styles.app}>
         <AppHeader />
         <Routes location={backgroundLocation || location}>
-          <Route path='/' element={<ConstructorPage />} />
+          <Route path='/stellar-burger' element={<ConstructorPage />} />
           <Route path='/feed' element={<Feed />} />
           <Route
             path='/login'

@@ -37,7 +37,7 @@ export const ProtectedRoute = ({
   }
 
   if (onlyUnAuth && isAuthChecked) {
-    const from = location.state?.from || { pathname: '/' };
+    const from = location.state?.from || { pathname: '/stellar-burger' };
     return <Navigate replace to={from} />;
   }
 

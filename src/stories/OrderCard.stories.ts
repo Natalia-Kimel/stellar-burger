@@ -77,7 +77,7 @@ export const DefaultOrderCard: Story = {
       background: {
         hash: '',
         key: 'eitkep27',
-        pathname: '/',
+        pathname: '/stellar-burger',
         search: '',
         state: null
       }
