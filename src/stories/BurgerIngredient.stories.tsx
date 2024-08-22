@@ -43,7 +43,7 @@ export const DefaultIngredient: Story = {
       background: {
         hash: '',
         key: 'eitkep27',
-        pathname: '/stellar-burger',
+        pathname: '/',
         search: '',
         state: null
       }
